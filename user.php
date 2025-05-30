@@ -18,5 +18,16 @@ class User {
       $statement->execute([$username]);
       return $statement->fetchColumn() > 0;
     }
+
+  public function verify_user($username, $password) {
+    $db = db_connect();
+    $statement = $db->prepare("SELECT * FROM users WHERE username = ?");
+    $statement->execute([$username]);
+    $user = $statement->fetch(PDO::FETCH_ASSOC);
+    if ($user && password_verify($password, $user['password'])) {
+      return true;
+    }
+    return false;
+  }
   }
 ?>

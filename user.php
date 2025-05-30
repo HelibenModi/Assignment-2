@@ -18,6 +18,12 @@ class User {
       $statement->execute([$username]);
       return $statement->fetchColumn() > 0;
     }
+  public function create_user($username, $password) {
+    $db = db_connect();
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    $statement = $db->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
+    return $statement->execute([$username, $hashedPassword]);
+  }
 
   public function verify_user($username, $password) {
     $db = db_connect();

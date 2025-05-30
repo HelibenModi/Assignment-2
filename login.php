@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $user = new User();
   if ($user->verify_user($username, $password)) {
     $_SESSION['username'] = $username;
-    header("Location: dashboard.php");
+    echo "Successfully logged in.<br>Welcome, $username!";
     exit();
   } else {
     echo "Invalid credentials.";

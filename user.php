@@ -12,5 +12,11 @@ class User {
     return $rows;
   }
 
-  
+  public function user_exists($username) {
+      $db = db_connect();
+      $statement = $db->prepare("SELECT COUNT(*) FROM users WHERE username = ?");
+      $statement->execute([$username]);
+      return $statement->fetchColumn() > 0;
+    }
+  }
 ?>
